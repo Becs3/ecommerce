@@ -3,6 +3,7 @@ import { Layout } from "./pages/layout";
 import { NotFound } from "./pages/notFound";
 import { Home } from "./pages/home";
 import { ProductsPage } from "./pages/productsPage";
+import { ProductPage } from "./pages/productPage";
 
 export const router = createBrowserRouter([
     {
@@ -19,8 +20,8 @@ export const router = createBrowserRouter([
                 element: <ProductsPage />
             },
             {
-                path:"/",
-                element: <Home />
+                path:"/product",
+                element: <ProductPage />
             },
         ]
     }
