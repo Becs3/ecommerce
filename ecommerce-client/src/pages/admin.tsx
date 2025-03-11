@@ -1,17 +1,18 @@
 import { Link } from "react-router"
+import "../style/adminPage.css"
 
 export const Admin = () => {
-
-
 
     //see orders, costumers, orderdetails, productdetails options
     return(
     <>
-    <div>
-        <span><Link to="/admin/orders">Orders</Link></span>
-        <span><Link to="/admin/customers">Customers</Link></span>
-        <span><Link to="/admin/productItems">Products</Link></span>
-        <span><Link to="/">E-shop</Link></span>
+    <div className="admin-navigation">
+        <ul>
+            <li><Link to="/admin/orders">Orders</Link></li>
+            <li><Link to="/admin/customers">Customers</Link></li>
+            <li><Link to="/admin/productItems">Products</Link></li>
+            <li><Link to="/">E-shop</Link></li>
+        </ul>
     </div>
     </>
     )

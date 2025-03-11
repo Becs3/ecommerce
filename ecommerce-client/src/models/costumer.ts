@@ -1,7 +1,7 @@
 import { RowDataPacket } from "mysql2"
 
 export interface ICustomer extends RowDataPacket {
-    id: number | null
+    id: number
     firstname: string
     lastname: string
     email: string
@@ -13,3 +13,22 @@ export interface ICustomer extends RowDataPacket {
     country: string
     created_at: string
   }
+
+    export class Customer {
+      public id: number = Math.random();
+      public created_at: string = new Date().toISOString();
+  
+      constructor(
+        public firstname: string,
+        public lastname: string,
+        public email: string,
+        public password: string,
+        public phone: string,
+        public street_address: string,
+        public postal_code: string,
+        public city: string,
+        public country: string,
+      ) {}
+  }
+  
+  export type updateCust = Pick<ICustomer, "phone">

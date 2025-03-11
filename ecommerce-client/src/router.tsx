@@ -4,12 +4,17 @@ import { NotFound } from "./pages/notFound";
 import { Home } from "./pages/home";
 import { ProductsPage } from "./pages/productsPage";
 import { ProductPage } from "./pages/productPage";
-import { CustomersPage } from "./pages/admin/costumerPage";
 import { Admin } from "./pages/admin";
 import { Orders } from "./pages/admin/orders";
 import { OrderDetails } from "./pages/admin/order";
 import { ProductItems } from "./pages/admin/productItems";
 import { ProductItem } from "./pages/admin/productItem";
+import { UpdateProductPage } from "./pages/update/updateProductPage";
+import { CreateProduct } from "./pages/create/createProduct";
+import { ShowCustomers } from "./pages/admin/showCustomers";
+import { CustomerPage } from "./pages/admin/customerPage";
+import { UpdateCustomerPage } from "./pages/update/updateCostumer";
+import { CreateCustomerPage } from "./pages/create/createCostumer";
 
 export const router = createBrowserRouter([
     {
@@ -35,7 +40,18 @@ export const router = createBrowserRouter([
             },
                     {
                         path:"/admin/customers",
-                        element: <CustomersPage />
+                        element: <ShowCustomers />
+                    },{
+                        path:"/admin/showCustomers/customerPage/:id",
+                        element: <CustomerPage />
+                    },
+                    {
+                        path:"/admin/customers/createCustomer",
+                        element: <CreateCustomerPage />
+                    },
+                    {
+                        path:"/updateCustomerPage/:id",
+                        element: <UpdateCustomerPage />
                     },
                     {
                         path:"/admin/orders",
@@ -49,9 +65,17 @@ export const router = createBrowserRouter([
                         element: <ProductItems />
                     },
                     {
-                        path:"/admin/productItem/:id",
+                        path:"/admin/productItems/productItem/:id",
                         element: <ProductItem />
-                    }
+                    },
+                    {
+                        path:"/updateProductPage/:id",
+                        element: <UpdateProductPage />
+                    },
+                    {
+                        path:"/admin/productItems/createProduct",
+                        element: <CreateProduct />
+                    },
             
         ]
     }

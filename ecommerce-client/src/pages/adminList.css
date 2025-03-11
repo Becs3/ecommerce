@@ -1,0 +1,31 @@
+.list-container{
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    a{
+        color: beige;
+    }
+
+    .list-section {
+        background-color: lightslategray;
+        
+        ul{
+            list-style: none;
+            gap:5%;
+            display: flex;
+
+            a{
+                color: black;
+            }
+
+            a:hover {
+                color: beige;
+            }
+        }
+    }
+
+}

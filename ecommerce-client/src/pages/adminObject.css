@@ -1,0 +1,20 @@
+.object-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    ul{
+        list-style: none;
+    }
+
+    a{
+        color: beige;
+    }
+
+    button{
+        display: block;
+        margin: 10%;
+    }
+}

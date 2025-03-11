@@ -3,6 +3,7 @@ import { IProduct } from "../models/product"
 import { useParams } from "react-router";
 import { Link } from "react-router";
 import { useProducts } from "../hooks/useProduct";
+import "../style/productStyle.css"
 
 export const ProductPage = () => {
         const [product, setProduct] = useState<IProduct>()
@@ -11,7 +12,7 @@ export const ProductPage = () => {
     
         useEffect (()=> {
             if(!param.id) return;
-            fetchProductByIdHandler(param.id).then((data)=>setProduct(data))
+            fetchProductByIdHandler(+param.id).then((data)=>setProduct(data))
         }, [])
     
         if (isLoading) return <p>Loading...</p>
@@ -21,20 +22,16 @@ export const ProductPage = () => {
     //Showing product details. be able to add to cart. Choose amount.
     return (
     <>
-        <div>
-            <div>
+        <div className="product-container">
+            <div className="decription-container">
             <h2>{product?.name}</h2>
             <p>{product?.description}</p>
-            <p>{product?.price}</p>
+            <p>Price per unit: {product?.price}kr</p>
+            <button>Add to cart</button>
+            <p><Link to="/products">Go back to products</Link></p>
             </div>
-            <div>
-                <button>Add to cart</button>
-            </div>
-            <div>
+            <div className="img-container">
                 <img src={product?.image} alt={product?.name} />
-            </div>
-            <div>
-                <Link to="/products">Go back</Link>
             </div>
         </div>
     </>

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { IProduct, updateProd } from "../models/product"
+import { IProduct, Product, updateProd } from "../models/product"
 import { createProduct, deleteProduct, fetchProductByID, fetchProducts, updateProduct } from "../service/productService";
 
 export const useProducts = () => {
@@ -34,7 +34,7 @@ export const useProducts = () => {
         }
     }
 
-    const createProductHandler = async(payload:IProduct) => {
+    const createProductHandler = async(payload:Product) => {
         setIsLoading(true);
 
         try {
@@ -60,11 +60,13 @@ export const useProducts = () => {
         }
     }
 
-    const deleteProductHandler = async(id:string) => {
+    const deleteProductHandler = async(id:number) => {
         setIsLoading(true);
 
         try {
             await deleteProduct(id);
+            const newProducts = products.filter(p => p.id !== id);
+            setProducts(newProducts)
         } catch(error){
             setError("Problem fetching product")
             throw error;

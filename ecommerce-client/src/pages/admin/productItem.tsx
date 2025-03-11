@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { IProduct } from "../../models/product"
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useProducts } from "../../hooks/useProduct";
+import "../adminObject.css"
 
 export const ProductItem = () => {
 
@@ -20,13 +21,18 @@ export const ProductItem = () => {
     // See product details. Be able to update and delete them
     return(
     <>
-            <div>
-            <h2>{product?.name}</h2>
-            <p>{product?.description}</p>
-            <p>{product?.price}</p>
-            <p>{product?.category}</p>
-            <p>{product?.stock}</p>
-            <img src={product?.image} alt={product?.name} />
+            <div className="object-container">
+                <ul>
+            <li>Product name: {product?.name}</li>
+            <li>Product id: {product?.id}</li>
+            <li>Description: {product?.description}</li>
+            <li>Price: {product?.price}</li>
+            <li>Category: {product?.category}</li>
+            <li>Stock: {product?.stock}</li>
+            <li>Created at: {product?.created_at}</li>
+            <li><img src={product?.image} alt={product?.name} /></li>
+            </ul>
+            <Link to="/admin/productItems">Back to products</Link>
             </div>
     </>
     )

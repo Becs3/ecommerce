@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IProduct, updateProd } from "../models/product";
+import { IProduct, Product, updateProd } from "../models/product";
 import { API_URL, handleRequest } from "./baseService";
 
 export const fetchProducts = async ()=> {
@@ -11,8 +11,8 @@ export const fetchProductByID = async(id:number) => {
 }
 
 
-export const createProduct = async(payload: IProduct) => {
-    return await handleRequest<IProduct>(axios.post(`${API_URL}/products`, payload))
+export const createProduct = async(payload: Product) => {
+    return await handleRequest<Product>(axios.post(`${API_URL}/products`, payload))
 }
 
 export const updateProduct = async(id:number, payload: updateProd): Promise<IProduct> => {
@@ -20,6 +20,6 @@ export const updateProduct = async(id:number, payload: updateProd): Promise<IPro
 }
 
 
-export const deleteProduct = async(id:string): Promise<void> => {
-    return await handleRequest<void>(axios.delete(`${API_URL}/products/${id}`))
+export const deleteProduct = async(id:number)=> {
+    return await handleRequest(axios.delete(`${API_URL}/products/${id}`))
 }

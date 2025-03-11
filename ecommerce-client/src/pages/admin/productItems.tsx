@@ -1,14 +1,22 @@
 import { useEffect } from "react"
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useProducts } from "../../hooks/useProduct";
+import "../adminList.css"
 
 export const ProductItems = () => {
 
-    const {products, isLoading, error, fetchProductsHandler } = useProducts();
+    const {products, isLoading, error, fetchProductsHandler, deleteProductHandler } = useProducts();
+    const nav = useNavigate();
     
         useEffect(() => {
             fetchProductsHandler();
         }, [])
+
+        const deleteProd = async(id:number) => {
+            
+            await deleteProductHandler(id);
+            nav("/admin/productItems");
+        }
     
         if (isLoading) return <p>Loading...</p>
         if (error) return <p>{error}</p>
@@ -17,26 +25,29 @@ export const ProductItems = () => {
     //Be able to create product
     return(
     <>
+    <div className="list-container">
     <div>
+        <Link to="/admin">Back to admin</Link>
+        </div>
     <h2> Products </h2>
     <div>
-        <button>Add product</button>
+        <Link to="createProduct">Add new product</Link>
     </div>
     <div>
         <section>
             {products.map((p) => (
-                <div key={p.id}>
-                    <p>{p.name}</p>
-                    <p>{p.price}</p>
-                    <p>{p.stock}</p>
-                    <button>Delete</button> 
-                    <button>Update</button> 
+                <div key={p.id} className="list-section">
+                    <p>Product name: {p.name}</p>
+                    <p>Price: {p.price}</p>
+                    <p>Stock: {p.stock}</p>
+                    <ul>
+                    <li><a onClick={() => {deleteProd(p.id)}}>Delete product </a></li>
+                    <li><Link to ={`/updateProductPage/${p.id}`}>Update Product </Link></li>
+                    <li><Link to={`/admin/productItems/productItem/${p.id}`}> Product details</Link></li>
+                    </ul>
                 </div>
                 
             ))}
-            <div>
-                <Link to="/admin/productItem">See more</Link>
-            </div>
         </section>
     </div>
     </div>
