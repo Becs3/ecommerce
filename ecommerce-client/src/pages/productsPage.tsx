@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { Link } from "react-router";
 import { useProducts } from "../hooks/useProduct";
 import "../style/productPageStyle.css"
+import CategorySearch from "../components/searchCategory";
 
 export const ProductsPage = () => {
     const {products, isLoading, error, fetchProductsHandler } = useProducts();
@@ -13,12 +14,20 @@ export const ProductsPage = () => {
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
 
-    // List of all products. Go into each product
-    // add search by category
+    const searchCategory = (search: string) => {
+        products.map((p) => {
+            if(search === p.category) {
+                return p;              
+          } else return;
+          })
+    }
+
     return(
     <>
         <div className="products-container">
         <h2>Our Products</h2>
+        <CategorySearch searchCategory = {searchCategory}/>
+        
             <section className="product-container">{
                 products.map((product) => (
                     <article>

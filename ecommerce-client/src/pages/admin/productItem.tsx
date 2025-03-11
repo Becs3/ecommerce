@@ -30,7 +30,11 @@ export const ProductItem = () => {
             <li>Category: {product?.category}</li>
             <li>Stock: {product?.stock}</li>
             <li>Created at: {product?.created_at}</li>
-            <li><img src={product?.image} alt={product?.name} /></li>
+            <li>
+                <div className="img-container">
+                    <img src={product?.image} alt={product?.name} />
+                </div>
+            </li>
             </ul>
             <Link to="/admin/productItems">Back to products</Link>
             </div>

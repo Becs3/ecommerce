@@ -13,6 +13,9 @@ export const Nav = () =>{
                 <li>
                     <NavLink to={"/admin"}>Admin</NavLink>
                 </li>
+                <li>
+                    <NavLink to={"/cart"}>Cart</NavLink>
+                </li>
             </ul>
         </nav>
     )

@@ -5,8 +5,12 @@ import { Link } from "react-router";
 import { useProducts } from "../hooks/useProduct";
 import "../style/productStyle.css"
 
-export const ProductPage = () => {
-        const [product, setProduct] = useState<IProduct>()
+type AddToCartProps = {
+    AddToCart: (product: IProduct) => void;
+  }
+
+export const ProductPage = (props: AddToCartProps) => {
+        const [product, setProduct] = useState<IProduct | null>(null)
         const {isLoading, error, fetchProductByIdHandler} = useProducts();
         const param = useParams();
     
@@ -14,6 +18,12 @@ export const ProductPage = () => {
             if(!param.id) return;
             fetchProductByIdHandler(+param.id).then((data)=>setProduct(data))
         }, [])
+
+        const handleClick = (product: IProduct|null) => {
+
+            if(!product) return;
+            props.AddToCart(product)
+        }
     
         if (isLoading) return <p>Loading...</p>
         if (error) return <p>{error}</p>
@@ -27,7 +37,7 @@ export const ProductPage = () => {
             <h2>{product?.name}</h2>
             <p>{product?.description}</p>
             <p>Price per unit: {product?.price}kr</p>
-            <button>Add to cart</button>
+            <button onClick={() =>handleClick(product)}>Add to cart</button>
             <p><Link to="/products">Go back to products</Link></p>
             </div>
             <div className="img-container">

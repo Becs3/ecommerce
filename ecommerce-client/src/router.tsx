@@ -15,6 +15,7 @@ import { ShowCustomers } from "./pages/admin/showCustomers";
 import { CustomerPage } from "./pages/admin/customerPage";
 import { UpdateCustomerPage } from "./pages/update/updateCostumer";
 import { CreateCustomerPage } from "./pages/create/createCostumer";
+import { Cart } from "./pages/cart";
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
             {
                 path:"/products/:id",
                 element: <ProductPage />
+            },
+            {
+                path:"/cart",
+                element: <Cart />,
             },
             {
                 path:"/admin",
