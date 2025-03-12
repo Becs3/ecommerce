@@ -6,30 +6,29 @@ import { useProducts } from "../hooks/useProduct";
 import "../style/productStyle.css"
 
 type AddToCartProps = {
-    AddToCart: (product: IProduct) => void;
+    AddToCart: (product: IProduct, quantity: number) => void;
   }
 
-export const ProductPage = (props: AddToCartProps) => {
+export const ProductPage = ({AddToCart}: AddToCartProps) => {
         const [product, setProduct] = useState<IProduct | null>(null)
+        const [quantity, setQuantity] = useState<number>(1)
         const {isLoading, error, fetchProductByIdHandler} = useProducts();
-        const param = useParams();
+        const { id } = useParams();
     
         useEffect (()=> {
-            if(!param.id) return;
-            fetchProductByIdHandler(+param.id).then((data)=>setProduct(data))
+            if(!id) return;
+            fetchProductByIdHandler(+id).then((data)=>setProduct(data))
         }, [])
 
-        const handleClick = (product: IProduct|null) => {
+        const handleClick = () => {
 
             if(!product) return;
-            props.AddToCart(product)
+            AddToCart(product, quantity);
         }
     
         if (isLoading) return <p>Loading...</p>
         if (error) return <p>{error}</p>
 
-
-    //Showing product details. be able to add to cart. Choose amount.
     return (
     <>
         <div className="product-container">
@@ -37,7 +36,16 @@ export const ProductPage = (props: AddToCartProps) => {
             <h2>{product?.name}</h2>
             <p>{product?.description}</p>
             <p>Price per unit: {product?.price}kr</p>
-            <button onClick={() =>handleClick(product)}>Add to cart</button>
+            <label>
+                    Quantity:
+                    <input
+                        type="number"
+                        min="1"
+                        value={quantity}
+                        onChange={(e) => setQuantity(Number(e.target.value))}
+                    />
+            </label>
+            <button onClick={handleClick}>Add to cart</button>
             <p><Link to="/products">Go back to products</Link></p>
             </div>
             <div className="img-container">

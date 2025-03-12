@@ -3,7 +3,6 @@ import "../style/adminPage.css"
 
 export const Admin = () => {
 
-    //see orders, costumers, orderdetails, productdetails options
     return(
     <>
     <div className="admin-navigation">
@@ -13,6 +12,12 @@ export const Admin = () => {
             <li><Link to="/admin/productItems">Products</Link></li>
             <li><Link to="/">E-shop</Link></li>
         </ul>
+    </div>
+    <div className="order-container">
+        <div className="order-object">
+        <p>Here you will see all orders</p>
+        </div>
+
     </div>
     </>
     )

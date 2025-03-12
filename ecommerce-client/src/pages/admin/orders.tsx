@@ -1,8 +1,58 @@
+import { Link, useNavigate } from "react-router";
+import "../adminList.css"
+import { useEffect } from "react";
+import { useOrder } from "../../hooks/useOrder";
+
 export const Orders = () => {
 
+    const {orders, fetchOrdersHandler, isLoading, error, deleteOrderHandler} = useOrder();
+
+    const nav = useNavigate();
+    
+        useEffect(() => {
+            fetchOrdersHandler();
+        }, [])
+
+        const deleteOrder = async(id:number) => {
+
+            if(!id) return;
+            
+            await deleteOrderHandler(id);
+            nav("/admin/orders");
+        }
+
+        if (isLoading) return <p>Loading...</p>
+        if (error) return <p>{error}</p>
+    
     return(
     <>
-    <h2>See all orders, be able to go into detail, delete and update</h2>
+    <div className="list-container">
+        <h2>Orders</h2>
+        <div>
+        <Link to="/admin">Back to admin</Link>
+        </div>
+        <div>
+        <section>
+            {orders.map((o) => (
+                <div key={o.id} className="list-section">
+                    <p>Order ID: {o.id}</p>
+                    <p>Customer name: {o.customer_firstname} {o.customer_lastname}</p>
+                    <p>Customer email: {o.customer_email}</p>
+                    <p>Customer phone: {o.customer_phone}</p>
+                    <p>Price: {o.total_price}</p>
+                    <p>Payment status: {o.payment_status}</p>
+                    <p>Order status: {o.order_status}</p>
+                    <p>Date: {o.created_at}</p>
+                    <ul>
+                    <li><a onClick={() => {deleteOrder(o.id)}}>Delete order </a></li>
+                    <li><Link to={`/admin/orders/orderDetails/${o.id}`}> Order details</Link></li>
+                    </ul>
+                </div>
+                
+            ))}
+        </section>
+    </div>
+    </div>
     </>
     )
 }

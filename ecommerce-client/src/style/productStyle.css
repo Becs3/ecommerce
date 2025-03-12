@@ -5,15 +5,11 @@
     align-items: center;
     gap: 20px;
     margin: auto 30px;
-    margin-top: 150px;
+    margin-top: 20px;
 
     .decription-container{
         flex-wrap: wrap;
         width: 30%;
-    }
-
-    a{
-        color: white;
     }
 
     .img-container{

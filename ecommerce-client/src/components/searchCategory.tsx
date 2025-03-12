@@ -1,20 +1,40 @@
-import { useState } from "react";
-
-const categories = ["Skis", "Snowboards", "Accessories"];
+import { ChangeEvent, useState } from "react";
 
 type searchCategoryProps = {
   searchCategory: (category: string) => void;
+  categories: string[]
 }
 
-const CategorySearch = (props: searchCategoryProps) => {
-  const [search, setSearch] = useState("");
+const CategorySearch = ({ searchCategory, categories }: searchCategoryProps) => {
+  const [search, setSearch] = useState(""); 
 
-  const handleSubmit = () =>{
+  /* const handleSubmit = (e: FormEvent) =>{
+    e.preventDefault();
+    props.searchCategory(search);
+  } */
 
-    return search;
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) =>{
+    const category = e.currentTarget.value;
+
+    setSearch(category)
+    searchCategory(category);
   }
 
   return (
+    <div>
+        <p>Filter by category:</p>
+        <select value={search} onChange={handleChange}>
+            <option value="">All Products</option> {/* Show all products */}
+            {categories.map((category) => (
+                <option key={category} value={category}>
+                    {category}
+                </option>
+            ))}
+        </select>
+    </div>
+);
+
+/*   return (
     <div>
       <p>Search by category:</p>
       <form onSubmit = {handleSubmit}>
@@ -27,7 +47,7 @@ const CategorySearch = (props: searchCategoryProps) => {
     <button type="submit">Search</button>
     </form>
     </div>
-  );
+  ); */
 };
 
 export default CategorySearch;
