@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { IOrder } from "../../models/order";
 import { useOrder } from "../../hooks/useOrder";
 import { useOrderItem } from "../../hooks/useOrderItem";
+import { OrderItem } from "../../models/orderItem";
+import { UpdateOrder } from "../update/updateOrder";
 
 export const OrderDetails = () => {
 
     const {fetchOrderByIdHandler, isLoading, error} = useOrder();
-    const {fetchOrderItemsHandler, updateOrderItemHandler, deleteOrderItemHandler} = useOrderItem();
+    const {deleteOrderItemHandler} = useOrderItem();
     const [order, setOrder] = useState<IOrder>();
     const nav = useNavigate();
     const params = useParams();
+    
 
     useEffect(() => {
         if(!params.id) return;
         fetchOrderByIdHandler(+params.id).then((data)=>setOrder(data));
-        fetchOrderItemsHandler();
-    
+        
     }, [])
 
     const deleteOrderItem = async(id:number) => {
@@ -57,20 +59,14 @@ export const OrderDetails = () => {
                 <section>
                     <h2>order items</h2>
                     {order?.order_items.map((oi) => (
-                <div key={oi.id} className="list-section">
+                <div key={oi.product_id} className="list-section">
                     <p>Item ID: {oi.product_id}</p>
                     <p>Name: {oi.product_name}</p>
-                    {/* <input type="number"
-                    value={oi.quantity}
-                    onChange={(e) => {
-                        e.preventDefault();
-
-                        updateOrderItemHandler(oi.id, {quantity: oi.quantity})};
-                        setOrder(fetchOrderByIdHandler());} /> */}
                     <p>Quantity: {oi.quantity}</p>
+                    <UpdateOrder OrderId={order.id}></UpdateOrder>
                     <p>Price: {oi.unit_price}</p>
                     <ul>
-                    <li><a onClick={() => {deleteOrderItem(oi.id)}}>Delete order </a></li>
+                    <li><a onClick={() => {deleteOrderItem(oi.product_id)}}>Delete item </a></li>
                     </ul>
                 </div>
                 
