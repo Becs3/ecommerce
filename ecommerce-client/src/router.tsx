@@ -16,7 +16,7 @@ import { CustomerPage } from "./pages/admin/customerPage";
 import { UpdateCustomerPage } from "./pages/update/updateCostumer";
 import { CreateCustomerPage } from "./pages/create/createCostumer";
 import { Checkout } from "./pages/checkout";
-import { UpdateOrder } from "./pages/update/updateOrder";
+import { IProduct } from "./models/product";
 
 export const router = createBrowserRouter([
     {
@@ -34,11 +34,15 @@ export const router = createBrowserRouter([
             },
             {
                 path:"/products/:id",
-                element: <ProductPage />
+                element: <ProductPage AddToCart={function (product: IProduct, quantity: number): void {
+                    throw new Error("Function not implemented.");
+                } } />
             },
             {
                 path:"/cart",
-                element: <Checkout />,
+                element: <Checkout CheckoutDetails={function (product: IProduct, quantity: number): void {
+                    throw new Error("Function not implemented.");
+                } } />,
             },
             {
                 path:"/admin",
@@ -66,10 +70,6 @@ export const router = createBrowserRouter([
                     {
                         path:"/admin/orders/orderDetails/:id",
                         element: <OrderDetails />
-                    },
-                    {
-                        path:"/updateOrders/:id",
-                        element: <UpdateOrder />
                     },
                     {
                         path:"/admin/productItems",

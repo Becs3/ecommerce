@@ -1,17 +1,13 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router";
 import { IOrder } from "../../models/order";
 import { useOrder } from "../../hooks/useOrder";
-import { useOrderItem } from "../../hooks/useOrderItem";
-import { OrderItem } from "../../models/orderItem";
 import { UpdateOrder } from "../update/updateOrder";
 
 export const OrderDetails = () => {
 
     const {fetchOrderByIdHandler, isLoading, error} = useOrder();
-    const {deleteOrderItemHandler} = useOrderItem();
     const [order, setOrder] = useState<IOrder>();
-    const nav = useNavigate();
     const params = useParams();
     
 
@@ -20,14 +16,6 @@ export const OrderDetails = () => {
         fetchOrderByIdHandler(+params.id).then((data)=>setOrder(data));
         
     }, [])
-
-    const deleteOrderItem = async(id:number) => {
-
-        if(!id) return;
-        
-        await deleteOrderItemHandler(id);
-        nav(`/admin/orders/orderDetail/${id}`);
-    }
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
@@ -59,17 +47,15 @@ export const OrderDetails = () => {
                 <section>
                     <h2>order items</h2>
                     {order?.order_items.map((oi) => (
-                <div key={oi.product_id} className="list-section">
-                    <p>Item ID: {oi.product_id}</p>
-                    <p>Name: {oi.product_name}</p>
-                    <p>Quantity: {oi.quantity}</p>
-                    <UpdateOrder OrderId={order.id}></UpdateOrder>
-                    <p>Price: {oi.unit_price}</p>
-                    <ul>
-                    <li><a onClick={() => {deleteOrderItem(oi.product_id)}}>Delete item </a></li>
-                    </ul>
-                </div>
-                
+                        <div key={oi.product_id} className="list-section">
+                            <ul>
+                        <li><p>Item ID: {oi.product_id}</p></li>
+                        <li><p>Name: {oi.product_name}</p></li>
+                        <li><p>Price: {oi.unit_price}</p></li>
+                        <li><p>Quantity: {oi.quantity}</p></li>
+                        <li><p><UpdateOrder OrderId={order.id}></UpdateOrder></p></li>
+                        </ul>
+                        </div>
             ))}
                 </section>
             <Link to="/admin/orders">Back to products</Link>

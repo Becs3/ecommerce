@@ -15,11 +15,6 @@ export const UpdateCustomerPage = () => {
             fetchCustomerByIdHandler(+params.id).then((data) => setCustomer(data))
         }, [])
     
-        const handleChange =(e:FormEvent<HTMLInputElement>) => {
-            if(!customer) return;
-            setCustomer({...customer, phone: e.currentTarget.value})
-    
-        }
     
         const handleSubmit = async (e:FormEvent) => {
             e.preventDefault();
@@ -43,9 +38,22 @@ export const UpdateCustomerPage = () => {
                 <input type="string"
                 placeholder="new phonenumber"
                 value={customer?.phone} 
-                onChange={handleChange}
+                onChange={(e:FormEvent<HTMLInputElement>) => {
+                    if(!customer) return;
+                    setCustomer({...customer, phone: e.currentTarget.value})
+            
+                }}
                 />
-                <button type="submit">Update phonenumber</button>
+                <input type="string"
+                placeholder="new email"
+                value={customer?.email} 
+                onChange={(e:FormEvent<HTMLInputElement>) => {
+                    if(!customer) return;
+                    setCustomer({...customer, email: e.currentTarget.value})
+            
+                }}
+                />
+                <button type="submit">Update</button>
             </form>
             <Link to="/admin/customers">Back to customers</Link>
             </div>

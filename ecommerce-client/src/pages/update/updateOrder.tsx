@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useOrder } from "../../hooks/useOrder";
 import { IOrder } from "../../models/order";
+import { useOrderItem } from "../../hooks/useOrderItem";
 
 type updateItemProps = {
     OrderId: number;
@@ -9,7 +10,8 @@ type updateItemProps = {
 
 export const UpdateOrder = ({OrderId}:updateItemProps) => {
 
-    const {fetchOrderByIdHandler, updateOrderHandler} =useOrder();
+    const {fetchOrderByIdHandler} =useOrder();
+    const {updateOrderItemHandler, deleteOrderItemHandler} =useOrderItem();
     const [order, setOrder] = useState<IOrder>();
     const nav = useNavigate();
 
@@ -21,46 +23,53 @@ export const UpdateOrder = ({OrderId}:updateItemProps) => {
     }, [OrderId])
 
 
-    const handleChange =(e:ChangeEvent<HTMLInputElement>) => {
-                
-        if(!order) return;
-            setOrder({...order, order_items: [/* order.order_items[] */]})
-        }
+    const handleChange =(e:ChangeEvent<HTMLInputElement>, orderItemID: number) => {
+        const updatedOrderItems = order?.order_items.map((oi) => (
+            oi.id === orderItemID
+                ? {...oi, quantity: +e.target.value}
+                : oi
+        ))
+ 
+ 
+        if(!order || !updatedOrderItems) return;
+        setOrder({...order, order_items: updatedOrderItems});
+    }
         
             
-    const handleSubmit = async (e:FormEvent, ItemID:number) => {
-            e.preventDefault();
+    const handleSubmit = async (e:FormEvent, orderItemId:number, quantity: number) => {
+        e.preventDefault();
+        await updateOrderItemHandler(orderItemId, {quantity:  quantity});
+        nav("/admin/orders")
         
-            if(!ItemID === order?.order_items[{id}]) return;
+    }
 
-            await updateOrderHandler(order.id, {...order.order_items[{ItemID}]});
-            nav("/admin/orders")
-            
-        }
+    const deleteOrderItem = async(id:number) => {
+
+        if(!id) return;
+        
+        await deleteOrderItemHandler(id);
+        nav(`/admin/orders`);
+    }
 
 
-
-
-    return(
-        <>
+        return(
+            <>
                 <section>
-                    <h2>order item update</h2>
                     {order?.order_items.map((oi) => (
-                <div key={oi.product_id} className="list-section">
-                    <p>Item ID: {oi.product_id}</p>
-                    <p>Name: {oi.product_name}</p>
-                    <p>Quantity: {oi.quantity}</p>
-                    <form onSubmit={() =>handleSubmit(e, oi.product_id)}>
-                    <input type="number"
-                    value={oi.quantity}
-                    onChange={handleChange}
-                    /> 
-                    <button type="submit">Update</button>
-                    </form>
-               </div>
+                        <div key={oi.product_id} className="list-section">
+                            <form onSubmit={(e) =>handleSubmit(e, oi.id, oi.quantity)}>
+                            <input type="number"
+                            value={oi.quantity}
+                            onChange={(e) => handleChange(e, oi.id)}
+                            /> 
+                            <button type="submit">Update</button>
+                            </form>
+                            <a onClick={() => {deleteOrderItem(oi.id)}}>Delete item </a>
+                    </div>
                 
                 ))}
                 </section>
-        </>
+            </>
 
 )};
+

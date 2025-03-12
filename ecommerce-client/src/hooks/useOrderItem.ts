@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { IOrderItem, updateOrItem } from "../models/orderItem";
-import { deleteOrder, fetchOrders } from "../service/orderService";
-import { fetchOrderItemByID, updateOrderItem } from "../service/orderItemService";
-import { IOrder } from "../models/order";
+import { deleteOrder } from "../service/orderService";
+import { deleteOrderItem, updateOrderItem } from "../service/orderItemService";
 
 
 export const useOrderItem = () => {
@@ -10,7 +9,7 @@ export const useOrderItem = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
 
-     const fetchOrderItemsHandler = async() => {
+/*      const fetchOrderItemsHandler = async() => {
         setIsLoading(true);
 
         try {
@@ -35,7 +34,7 @@ export const useOrderItem = () => {
         } finally {
             setIsLoading(false);
         }
-    }
+    } */
 
     const updateOrderItemHandler = async(id:number, payload:updateOrItem) => {
         setIsLoading(true);
@@ -54,7 +53,7 @@ export const useOrderItem = () => {
         setIsLoading(true);
 
         try {
-            await deleteOrder(id);
+            await deleteOrderItem(id);
             const newOrderItems = orderItems.filter(oi => oi.id !== id);
             setOrderItems(newOrderItems)
         } catch(error){
@@ -68,14 +67,9 @@ export const useOrderItem = () => {
     return { 
         orderItems, 
         isLoading, 
-        error,  
-        fetchOrderItemsHandler,
-        fetchOrderItemByIdHandler,
+        error, 
         updateOrderItemHandler,
         deleteOrderItemHandler
     }
 }
 
-function setOrders(data: IOrder[]) {
-    throw new Error("Function not implemented.");
-}
