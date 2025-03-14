@@ -5,6 +5,7 @@ export const Home = () => {
     return(
     <>
     <div className="container">
+        <section>
         <div className="img-container">
             <img src="https://images.pexels.com/photos/12178581/pexels-photo-12178581.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
             alt="skigear" />
@@ -19,6 +20,7 @@ export const Home = () => {
          advice to make the most of your winter adventures. 
          Gear up and hit the mountains with confidence—SkiShop
          has you covered! ❄️🏔️</p>
+         </section>
     </div>
     </>
     )

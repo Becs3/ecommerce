@@ -31,4 +31,4 @@ export interface ICustomer extends RowDataPacket {
       ) {}
   }
   
-  export type updateCust = Pick<ICustomer, "phone" | "email">
+  export type updateCust = Pick<ICustomer, "firstname" | "lastname" | "email" | "phone" | "street_address" | "postal_code" | "city" | "country">

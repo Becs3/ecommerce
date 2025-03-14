@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { Link, useNavigate } from "react-router";
 import { useCustomer } from "../../hooks/useCustomer";
 import "../adminList.css"
+import { AdminHeader } from "../../components/admin-header";
 
 export const ShowCustomers = () => {
 
@@ -22,20 +23,16 @@ export const ShowCustomers = () => {
         if (isLoading) return <p>Loading...</p>
         if (error) return <p>{error}</p>
 
-    //See all products. Be able to update and delete them
-    //Be able to create product
     return(
     <>
+    <AdminHeader />
     <div className="list-container">
-        <div>
-        <Link to="/admin">Back to admin</Link>
-        </div>
     <h2> Customers </h2>
     <div>
         <Link to="createCustomer">Add new customer</Link>
     </div>
     <div>
-        <section>
+        <section className="order-container">
             {customers.map((c) => (
                 <div key={c.id} className="list-section">
                     <p>Customer name: {c.firstname} {c.lastname} </p>

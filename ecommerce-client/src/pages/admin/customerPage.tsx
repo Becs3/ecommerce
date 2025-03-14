@@ -30,7 +30,7 @@ export const CustomerPage = () => {
                 <li>Street: {customer?.street_address}</li>
                 <li>Postal code: {customer?.postal_code}</li>
                 <li>City: {customer?.city}</li>
-                <li>Country: {customer?.countryli}</li>
+                <li>Country: {customer?.country}</li>
                 <li>Created at: {customer?.created_at}</li>
                 </ul>
                 <Link to="/admin/customers">Back to customers</Link>

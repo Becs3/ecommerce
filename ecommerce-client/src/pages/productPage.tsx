@@ -1,19 +1,27 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { IProduct } from "../models/product"
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router";
 import { useProducts } from "../hooks/useProduct";
 import "../style/productStyle.css"
+import { CartContext } from "../context/cartContext";
 
-type AddToCartProps = {
+/* type AddToCartProps = {
     AddToCart: (product: IProduct, quantity: number) => void;
-  }
+  } */
 
-export const ProductPage = ({AddToCart}: AddToCartProps) => {
+export const ProductPage = () => {
         const [product, setProduct] = useState<IProduct | null>(null)
         const [quantity, setQuantity] = useState<number>(1)
         const {isLoading, error, fetchProductByIdHandler} = useProducts();
         const { id } = useParams();
+        const nav = useNavigate();
+        const cartContext = useContext(CartContext);
+        const {AddToCart} = cartContext;
+
+        if(!cartContext){
+            throw new Error("Problem with context")
+        }
     
         useEffect (()=> {
             if(!id) return;
@@ -24,7 +32,10 @@ export const ProductPage = ({AddToCart}: AddToCartProps) => {
 
             if(!product) return;
             AddToCart(product, quantity);
-        }
+            setTimeout(() => {
+                nav("/products");
+            }, 100);
+        };
     
         if (isLoading) return <p>Loading...</p>
         if (error) return <p>{error}</p>

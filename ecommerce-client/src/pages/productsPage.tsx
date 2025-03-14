@@ -16,7 +16,7 @@ export const ProductsPage = () => {
         setFilteredProducts(products);
     }, [products]);
 
-    const categories = [...new Set(products.map((p) => p.category))];
+    const categories = ["snowboard", "ski", "accesories"];
   
     const handleSearch = (search: string) => {    
     if (search.trim() === "") {

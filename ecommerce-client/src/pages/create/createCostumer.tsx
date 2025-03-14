@@ -3,6 +3,7 @@ import { Customer } from "../../models/costumer";
 import { useCustomer } from "../../hooks/useCustomer";
 import { FormEvent, useState } from "react";
 import "../adminObject.css"
+import { AdminHeader } from "../../components/admin-header";
 
 export const CreateCustomerPage = () => {
         
@@ -40,7 +41,7 @@ export const CreateCustomerPage = () => {
                 created_at: ""
             })
     
-            nav("/admin/customers");
+          /*   nav("/admin/customers"); */
         }
     
         if (isLoading) return <p>Loading...</p>
@@ -98,10 +99,8 @@ export const CreateCustomerPage = () => {
                     onChange={(e)=> setCustomer({...customer, password: e.target.value})} 
                     /></li>
                     </ul>
-
                 <button type="submit">Add new customer</button>
             </form>
-            <Link to="/admin/customers">Go back to customers</Link>
             </div>
             </>
         )

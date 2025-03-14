@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { Link, useNavigate } from "react-router";
 import { useProducts } from "../../hooks/useProduct";
 import "../adminList.css"
+import { AdminHeader } from "../../components/admin-header";
 
 export const ProductItems = () => {
 
@@ -21,14 +22,10 @@ export const ProductItems = () => {
         if (isLoading) return <p>Loading...</p>
         if (error) return <p>{error}</p>
 
-    //See all products. Be able to update and delete them
-    //Be able to create product
     return(
     <>
+    <AdminHeader />
     <div className="list-container">
-    <div>
-        <Link to="/admin">Back to admin</Link>
-        </div>
     <h2> Products </h2>
     <div>
         <Link to="createProduct">Add new product</Link>

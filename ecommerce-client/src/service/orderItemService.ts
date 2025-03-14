@@ -1,15 +1,10 @@
 import axios from "axios"
-import { IOrderItem, updateOrItem } from "../models/orderItem"
+import { IOrderItem, OrderItem, updateOrItem } from "../models/orderItem"
 import { API_URL, handleRequest } from "./baseService"
 
-/*  export const fetchOrderItem = async ()=> {
-    return await handleRequest<IOrderItem[]>(axios.get(`${API_URL}/order-items`))
-} 
-
-export const fetchOrderItemByID = async(id:number) => {
-    return await handleRequest<IOrderItem>(axios.get(`${API_URL}/order-items/${id}`))
-} */
-
+export const createOrderItem = async(payload: OrderItem) => {
+    return await handleRequest<OrderItem>(axios.post(`${API_URL}/orders-items`, payload))
+}
 
 export const updateOrderItem = async(id:number, payload: updateOrItem): Promise<IOrderItem> => {
     return await handleRequest<IOrderItem>(axios.patch(`${API_URL}/order-items/${id}`,payload))

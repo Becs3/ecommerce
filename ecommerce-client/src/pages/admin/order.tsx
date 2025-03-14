@@ -58,7 +58,7 @@ export const OrderDetails = () => {
                         </div>
             ))}
                 </section>
-            <Link to="/admin/orders">Back to products</Link>
+            <Link to={`/admin/orders`}>Back to products</Link>
             </div>
             
     </>

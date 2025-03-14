@@ -1,7 +1,6 @@
 import { useState } from "react"
-import { IOrderItem, updateOrItem } from "../models/orderItem";
-import { deleteOrder } from "../service/orderService";
-import { deleteOrderItem, updateOrderItem } from "../service/orderItemService";
+import { IOrderItem, OrderItem, updateOrItem } from "../models/orderItem";
+import { createOrderItem, deleteOrderItem, updateOrderItem } from "../service/orderItemService";
 
 
 export const useOrderItem = () => {
@@ -9,32 +8,18 @@ export const useOrderItem = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
 
-/*      const fetchOrderItemsHandler = async() => {
+const createOrderItemHandler = async(payload:OrderItem) => {
         setIsLoading(true);
 
         try {
-            const data = await fetchOrders();
-            setOrders(data);
+            return await createOrderItem(payload);
         } catch(error){
-            setError("Problem fetching orders")
+            setError("Problem creating order")
             throw error;
         } finally {
             setIsLoading(false);
         }
-    } 
-
-    const fetchOrderItemByIdHandler = async(id:number) => {
-        setIsLoading(true);
-
-        try {
-            return await fetchOrderItemByID(id);
-        } catch(error){
-            setError("Problem fetching orderItem")
-            throw error;
-        } finally {
-            setIsLoading(false);
-        }
-    } */
+    }
 
     const updateOrderItemHandler = async(id:number, payload:updateOrItem) => {
         setIsLoading(true);
@@ -68,6 +53,7 @@ export const useOrderItem = () => {
         orderItems, 
         isLoading, 
         error, 
+        createOrderItemHandler,
         updateOrderItemHandler,
         deleteOrderItemHandler
     }

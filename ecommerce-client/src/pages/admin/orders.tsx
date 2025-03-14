@@ -2,11 +2,13 @@ import { Link, useNavigate } from "react-router";
 import "../adminList.css"
 import { useEffect } from "react";
 import { useOrder } from "../../hooks/useOrder";
+import { AdminHeader } from "../../components/admin-header";
+import { UpdateOrderStatus } from "../../components/orderUpdateCat";
 
 export const Orders = () => {
 
     const {orders, fetchOrdersHandler, isLoading, error, deleteOrderHandler} = useOrder();
-
+    
     const nav = useNavigate();
     
         useEffect(() => {
@@ -26,13 +28,11 @@ export const Orders = () => {
     
     return(
     <>
+    <AdminHeader />
     <div className="list-container">
         <h2>Orders</h2>
         <div>
-        <Link to="/admin">Back to admin</Link>
-        </div>
-        <div>
-        <section>
+        <section className="order-container">
             {orders.map((o) => (
                 <div key={o.id} className="list-section">
                     <p>Order ID: {o.id}</p>
@@ -42,6 +42,7 @@ export const Orders = () => {
                     <p>Price: {o.total_price}</p>
                     <p>Payment status: {o.payment_status}</p>
                     <p>Order status: {o.order_status}</p>
+                    {/* <UpdateOrderStatus OrderID={o.id}/> */}
                     <p>Date: {o.created_at}</p>
                     <ul>
                     <li><a onClick={() => {deleteOrder(o.id)}}>Delete order </a></li>

@@ -39,8 +39,8 @@ export const UpdateOrder = ({OrderId}:updateItemProps) => {
     const handleSubmit = async (e:FormEvent, orderItemId:number, quantity: number) => {
         e.preventDefault();
         await updateOrderItemHandler(orderItemId, {quantity:  quantity});
-        nav("/admin/orders")
-        
+
+        nav(`/admin/orders`)
     }
 
     const deleteOrderItem = async(id:number) => {
@@ -48,7 +48,7 @@ export const UpdateOrder = ({OrderId}:updateItemProps) => {
         if(!id) return;
         
         await deleteOrderItemHandler(id);
-        nav(`/admin/orders`);
+        nav(`/admin/orders/orderDetails/${id}`);
     }
 
 
