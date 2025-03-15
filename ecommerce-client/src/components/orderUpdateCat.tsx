@@ -1,13 +1,7 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useOrder } from "../hooks/useOrder";
+import "../pages/adminList.css"
 
-export const UpdatePaymentStatus = () => {
-
-    return(
-        <>
-        </>
-    )
-}
 
 type updateOrderStatusProps = {
     OrderID:number;
@@ -15,28 +9,59 @@ type updateOrderStatusProps = {
 
 export const UpdateOrderStatus = ({OrderID}: updateOrderStatusProps) => {
 
-    const categories = ["paid", "progess"]
+    const order_categories = ["inProgress", "readyForCollection", "cancelled", "Completed"]
+    const payment_categories = ["not paid", "paid"]
 
       const [orderStatus, setOrderStatus] = useState(""); 
-      const {updateOrderHandler}=useOrder();
+      const [paymentStatus, setPaymentStatus] = useState(""); 
+      const {fetchOrderByIdHandler, updateOrderHandler}=useOrder();
+
+      useEffect(() => {
+        const fetchOrderStatus = async () => {
+            const order = await fetchOrderByIdHandler(OrderID);
+            if (order) {
+                setOrderStatus(order.order_status); 
+                setPaymentStatus(order.payment_status);
+            }
+        };
+
+        fetchOrderStatus();
+    }, [OrderID]);
     
-      const handleChange = (e: ChangeEvent<HTMLSelectElement>) =>{
-        const orderstatus = e.currentTarget.value;
-    
-        setOrderStatus(orderstatus)
-        /* updateOrderHandler(OrderID, orderStatus)  */       
+
+      const handleSubmit = () => {
+
+        updateOrderHandler(OrderID, { order_status: orderStatus, payment_status: paymentStatus })
+
       }
 
     return (
+        <>
+        <form onSubmit={handleSubmit}>
+        <div className="status-container">
         <div>
             <p>OrderStatus</p>
-            <select value={orderStatus} onChange={handleChange}>
-                {categories.map((orderstatus) => (
+            <select value={orderStatus} onChange={(e:ChangeEvent<HTMLSelectElement>) => setOrderStatus(e.currentTarget.value)}>
+                {order_categories.map((orderstatus) => (
                     <option key={orderstatus} value={orderstatus}>
                         {orderstatus}
                     </option>
                 ))}
             </select>
         </div>
+        <div>
+            <p>PaymentStatus</p>
+            <select value={paymentStatus} onChange={(e:ChangeEvent<HTMLSelectElement>) => setPaymentStatus(e.currentTarget.value)}>
+                {payment_categories.map((paymentstatus) => (
+                    <option key={paymentstatus} value={paymentstatus}>
+                        {paymentstatus}
+                    </option>
+                ))}
+            </select>
+        </div>
+        <button>Save changes</button>
+        </div>
+        </form>
+    </>
     );
 }

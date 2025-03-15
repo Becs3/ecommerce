@@ -44,4 +44,4 @@ export class Order {
     ) {}
 }
 
-export type updateOrd = Pick<IOrder, "order_status">
+export type updateOrd = Pick<IOrder, "order_status" | "payment_status">

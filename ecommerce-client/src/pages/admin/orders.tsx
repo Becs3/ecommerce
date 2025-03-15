@@ -40,9 +40,7 @@ export const Orders = () => {
                     <p>Customer email: {o.customer_email}</p>
                     <p>Customer phone: {o.customer_phone}</p>
                     <p>Price: {o.total_price}</p>
-                    <p>Payment status: {o.payment_status}</p>
-                    <p>Order status: {o.order_status}</p>
-                    {/* <UpdateOrderStatus OrderID={o.id}/> */}
+                    <UpdateOrderStatus OrderID={o.id}/>
                     <p>Date: {o.created_at}</p>
                     <ul>
                     <li><a onClick={() => {deleteOrder(o.id)}}>Delete order </a></li>
