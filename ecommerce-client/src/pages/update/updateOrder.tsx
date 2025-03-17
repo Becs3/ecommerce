@@ -22,21 +22,27 @@ export const UpdateOrder = ({OrderId, OrderItem}:updateItemProps) => {
     useEffect (() =>{
 
         if(!OrderId) return;
-        fetchOrderByIdHandler(OrderId).then((data) => setOrder(data));
-        setOrderitemQ(OrderItem.quantity)
+        fetchOrderByIdHandler(OrderId).then((data) => {setOrder(data);
+            const item = data.order_items.find((i) => i.id === OrderItem.id);
+            if(item) {
+                setOrderitemQ(item.quantity)
+            }
+        
+    });
 
-    }, [OrderId])
+    }, [ OrderId ])
 
 
     const handleChange =(e:ChangeEvent<HTMLInputElement>, orderItemID: number) => {
+
+        const updatedQuantity = +e.target.value;
+        setOrderitemQ(updatedQuantity) 
+
         const updatedOrderItems = order?.order_items.map((oi) => (
             oi.id === orderItemID
-                ? {...oi, quantity: +e.target.value}
+                ? {...oi, quantity: updatedQuantity}
                 : oi
-    ))
-
-/*     const updatedQuantity = +e.target.value;
-        setOrderitemQ(updatedQuantity) */       
+    ))       
     
  
         if(!order || !updatedOrderItems) return;
@@ -45,13 +51,13 @@ export const UpdateOrder = ({OrderId, OrderItem}:updateItemProps) => {
         
             
     const handleSubmit = async (e:FormEvent, orderItemId:number, orderitemQ: number) => {
+        e.preventDefault();
 
         if(!orderitemQ) return;
 
-        e.preventDefault();
-        await updateOrderItemHandler(orderItemId, {quantity:  OrderItem.orderitemQ});
+        await updateOrderItemHandler(orderItemId, {quantity: orderitemQ});
 
-        nav(`/admin/orders`)
+        setTimeout(() => nav(`/admin/orders`), 300);
     }
 
     const deleteOrderItem = async(id:number) => {
@@ -59,7 +65,7 @@ export const UpdateOrder = ({OrderId, OrderItem}:updateItemProps) => {
         if(!id) return;
         
         await deleteOrderItemHandler(id);
-        nav(`/admin/orders`);
+        setTimeout(() => nav(`/admin/orders`), 300);
     }
 
 
