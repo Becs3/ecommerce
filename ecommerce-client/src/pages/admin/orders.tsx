@@ -15,7 +15,7 @@ export const Orders = () => {
             fetchOrdersHandler();
         }, [])
 
-        const deleteOrder = async(id:number) => {
+        const deleteFullOrder = async(id:number) => {
 
             if(!id) return;
             
@@ -43,7 +43,7 @@ export const Orders = () => {
                     <UpdateOrderStatus OrderID={o.id}/>
                     <p>Date: {o.created_at}</p>
                     <ul>
-                    <li><a onClick={() => {deleteOrder(o.id)}}>Delete order </a></li>
+                    <li><a onClick={() => {deleteFullOrder(o.id)}}>Delete order </a></li>
                     <li><Link to={`/admin/orders/orderDetails/${o.id}`}> Order details</Link></li>
                     </ul>
                 </div>

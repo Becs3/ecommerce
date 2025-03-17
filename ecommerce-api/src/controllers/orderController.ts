@@ -100,6 +100,8 @@ export const createOrder = async (req: Request, res: Response) => {
       INSERT INTO orders (customer_id, total_price, payment_status, payment_id, order_status)
       VALUES (?, ?, ?, ?, ?)
     `;
+/*     res.json(req.body)
+    return; */
 
     const totalPrice = req.body.order_items.reduce((total, item) => total + (item.quantity * item.unit_price), 0);
     const params = [customer_id, totalPrice, payment_status, payment_id, order_status]

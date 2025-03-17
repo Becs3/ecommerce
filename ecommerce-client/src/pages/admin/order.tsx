@@ -53,7 +53,7 @@ export const OrderDetails = () => {
                         <li><p>Name: {oi.product_name}</p></li>
                         <li><p>Price: {oi.unit_price}</p></li>
                         <li><p>Quantity: {oi.quantity}</p></li>
-                        <li><p><UpdateOrder OrderId={order.id}></UpdateOrder></p></li>
+                        <li><UpdateOrder OrderId={order.id} OrderItem ={oi}></UpdateOrder></li>
                         </ul>
                         </div>
             ))}
