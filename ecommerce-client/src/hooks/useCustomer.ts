@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Customer, ICustomer, updateCust } from "../models/costumer";
-import { createCustomer, deleteCustomer, fetchCustomerByID, fetchCustomers, updateCustomer } from "../service/customerService";
+import { createCustomer, deleteCustomer, fetchCustomerByEmail, fetchCustomerByID, fetchCustomers, updateCustomer } from "../service/customerService";
 
 export const useCustomer = () => {
     const [customers, setCustomers] = useState<ICustomer[]>([]);
@@ -29,6 +29,19 @@ export const useCustomer = () => {
         } catch(error){
             setError("Problem fetching costumer")
             throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const fetchCustomerByEmailHandler = async(email:string) => {
+        setIsLoading(true);
+
+        try {
+            return await fetchCustomerByEmail(email);
+        } catch{
+            console.log("customer did not exist")
+            return;
         } finally {
             setIsLoading(false);
         }
@@ -81,6 +94,7 @@ export const useCustomer = () => {
         error,
         fetchCustomerByIdHandler,
         fetchCustomersHandler,
+        fetchCustomerByEmailHandler,
         createCustomerHandler,
         updateCustomerHandler,
         deleteCustomerHandler

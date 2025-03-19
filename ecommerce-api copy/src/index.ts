@@ -47,8 +47,8 @@ app.post('/stripe/create-checkout-session-hosted', async (req: Request, res: Res
       },
     ],
     mode: 'payment',
-    success_url: 'http://localhost:5173/order-confirmation?session_id={CHECKOUT_SESSION_ID}',
-    cancel_url: 'http://localhost:5173/checkout',
+    success_url: 'http://localhost:5177/order-confirmation?session_id={CHECKOUT_SESSION_ID}',
+    cancel_url: 'http://localhost:5177/cart',
     client_reference_id: '123'
   });
 

@@ -10,6 +10,10 @@ export const fetchCustomerByID = async(id:number) => {
     return await handleRequest<ICustomer>(axios.get(`${API_URL}/customers/${id}`))
 }
 
+export const fetchCustomerByEmail = async(email:string) => {
+    return await handleRequest<ICustomer>(axios.get(`${API_URL}/customers/email/${email}`))
+}
+
 
 export const createCustomer = async(payload: Customer) => {
     return await handleRequest<Customer>(axios.post(`${API_URL}/customers`, payload))

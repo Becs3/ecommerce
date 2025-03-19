@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { Customer } from "../../models/costumer";
 import { useCustomer } from "../../hooks/useCustomer";
 import { FormEvent, useState } from "react";
@@ -41,7 +41,7 @@ export const CreateCustomerPage = () => {
                 created_at: ""
             })
     
-          /*   nav("/admin/customers"); */
+          nav("/admin/customers");
         }
     
         if (isLoading) return <p>Loading...</p>
@@ -49,6 +49,7 @@ export const CreateCustomerPage = () => {
     
         return(
             <>
+            <AdminHeader />
             <div className="object-container">
                 <h2>Create new customer</h2>
                 <form onSubmit={handleSubmit}>
