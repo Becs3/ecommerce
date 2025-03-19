@@ -1,7 +1,7 @@
-import { useContext, useEffect } from "react";
+import { FormEvent, useContext, useEffect } from "react";
 import { CartContext } from "../../context/cartContext";
 import "./cartCss.css";
-import { CreateCustomerPage } from "../create/createCostumer";
+
 
 export const Cart = () => {
   const cartContext = useContext(CartContext);
@@ -11,8 +11,31 @@ export const Cart = () => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    
+    try {
+      const response = await fetch('http://localhost:3000/stripe/create-checkout-session-hosted', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({}) // ????? lista ut själva
+      });
+  
+      const data = await response.json();
+      // console.log(data.checkout_url);
+  
+      // Redirect to Stripe Hosted Checkout
+      window.location.href = data.checkout_url
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
+    <form action="" onSubmit={handleSubmit}>
     <div className="container">
       <div>
         <h2>Your Cart</h2>
@@ -42,11 +65,11 @@ export const Cart = () => {
         ))}
       </div>
       <div className="customer-container">
-        <CreateCustomerPage></CreateCustomerPage>
-        <button>Log in</button>
-        <button>Buy</button>
+        Customer info page
       </div>
       </div>
+      <button>Till betalning</button>
+      </form>
     </>
   );
 };

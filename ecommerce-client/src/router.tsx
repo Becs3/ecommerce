@@ -14,8 +14,8 @@ import { ShowCustomers } from "./pages/admin/showCustomers";
 import { CustomerPage } from "./pages/admin/customerPage";
 import { UpdateCustomerPage } from "./pages/update/updateCostumer";
 import { CreateCustomerPage } from "./pages/create/createCostumer";
-import { IProduct } from "./models/product";
 import { Cart } from "./pages/cart/cart";
+
 
 export const router = createBrowserRouter([
   {
