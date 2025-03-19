@@ -1,11 +1,17 @@
 import { ChangeEvent, useEffect, useState } from "react"
 import { useCustomer } from "../../hooks/useCustomer"
 import { NewCartCustomer } from "./createNewCustomerCart";
+import { Customer, ICustomer } from "../../models/costumer";
 
-export const CartCustomerDetails = () => {
+type ICustomerData = {
+  CustomerData: (customer: Customer | null) => void;
+};
+
+export const CartCustomerDetails = ({CustomerData}: ICustomerData) => {
     const [customerEmail, setCustomerEmail] = useState("")
-    const {customers, fetchCustomersHandler, fetchCustomerByEmailHandler}=useCustomer();
+    const {fetchCustomersHandler, fetchCustomerByEmailHandler}=useCustomer();
     const [isCustomer, setIsCustomer] = useState<boolean>(true)
+    const [message, setMessage] = useState("");
 
     useEffect(() => {
         fetchCustomersHandler();
@@ -18,25 +24,31 @@ export const CartCustomerDetails = () => {
 
    const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); 
-        
-    const customerFound = await fetchCustomerByEmailHandler(customerEmail)
 
-    if(customerEmail){
-        customers.map((c) => {
-            if(c.email === customerEmail){
-                return c.id;
-            }
-        })
-    }
+    if(!customerEmail) return
+        
+    try{
+        
+        const customerFound = await fetchCustomerByEmailHandler(customerEmail)
 
     if (customerFound) {
         setIsCustomer(true);
-        return
-        console.log("found customer")
+        setMessage("You have an account, proceed to checkout")
+        CustomerData(customerFound)
       } else {
         setIsCustomer(false);
       }
 
+    } catch(error) {
+        console.log("error", error),
+        setMessage("an error occurred please try again")
+    }
+}
+
+    const newCustomer = (customer: Customer | null) => {
+        CustomerData(customer)
+        setIsCustomer(true);
+        setMessage("Your account has been created! Proceed to checkout.");
     }
 
     return(
@@ -50,14 +62,16 @@ export const CartCustomerDetails = () => {
         value={customerEmail}
         onChange={handleChange}/>
         <button type="submit">Check</button>
+        {message}
         </form>
         ):
         (
             <>
-            <NewCartCustomer />
+            <NewCartCustomer CustomerData = {newCustomer} />
             </>
 
-        )}
+        )
+        }
         </div>
         
         </>

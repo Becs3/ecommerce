@@ -1,10 +1,12 @@
-import { FormEvent, useContext, useEffect } from "react";
+import { FormEvent } from "react";
 import "./cartCss.css";
 import { CartCustomerDetails } from "./cartCustomerDetails";
 import { CartItems } from "./cartItems";
 import { CartDetailsData } from "../../models/cart";
+import { Customer } from "../../models/costumer";
 
 export const Cart = () => {
+  
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -34,16 +36,20 @@ export const Cart = () => {
     console.log("cart data:", cartInformationData);
   };
 
+  const CustomerData = (customer: Customer | null) => {
+    console.log("Customer data:", customer);
+  };
+
   return (
     <>
       <div className="container">
         <CartItems CartData={CartData} />
       </div>
       <div>
-        <CartCustomerDetails />
+        <CartCustomerDetails CustomerData={CustomerData}/>
       </div>
       <form onSubmit={handleSubmit}>
-        <button>Till betalning</button>
+        <button>To checkout</button>
       </form>
     </>
   );

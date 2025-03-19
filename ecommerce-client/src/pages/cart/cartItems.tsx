@@ -45,7 +45,7 @@ export const CartItems = ({ CartData }: ICartData) => {
               <section className="quantity-container">
                 <button
                   onClick={() => {
-                    if (cartItem.quantity < 0) {
+                    if (cartItem.quantity < 2) {
                       DeleteFromCart(cartItem.product, cartItem.quantity);
                     } else {
                       UpdateCart(cartItem.product, cartItem.quantity - 1);

@@ -2,10 +2,14 @@ import { FormEvent, useState } from "react";
 import { Customer } from "../../models/costumer";
 import { useCustomer } from "../../hooks/useCustomer";
 
-export const NewCartCustomer = () => {
+type INewCustomerData = {
+  CustomerData: (customer: Customer | null) => void;
+};
+
+export const NewCartCustomer = ({CustomerData}:INewCustomerData) => {
 
     const [message, setMessage] = useState("");
-
+    const {isLoading, error, createCustomerHandler} = useCustomer();
     const [customer, setCustomer] = useState<Customer>({
         id: 0,
         firstname: "",
@@ -20,13 +24,12 @@ export const NewCartCustomer = () => {
         created_at: ""
 
     })
-    const {isLoading, error, createCustomerHandler} = useCustomer();
 
     const handleSubmit = async(e: FormEvent) => {
         e.preventDefault();
 
         try {   
-        await createCustomerHandler({
+        const newCustomer = await createCustomerHandler({
             id: 0,
             firstname: customer.firstname,
             lastname: customer.lastname,
@@ -40,6 +43,7 @@ export const NewCartCustomer = () => {
             created_at: ""
         })
         setMessage("Your information has been added");
+        CustomerData(newCustomer)
         } catch(error){
             console.error("Error", error)
             setMessage("")
