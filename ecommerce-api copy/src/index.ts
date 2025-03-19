@@ -1,15 +1,13 @@
-/* import dotenv from "dotenv";
+import dotenv from "dotenv";
 import express, {Request, Response} from "express";
 import {connectDB} from "./config/db";
-import cors from "cors"
-
+import cors from "cors";
 
 dotenv.config();
 const app = express();
 
 // Middleware
 app.use(express.json())
-
 app.use(cors())
 
 // Routes
@@ -30,6 +28,7 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`The server is running at http://localhost:${PORT}`);
 })
+
 
 const stripe = require('stripe')(process.env.SECRET_KEY);
 
@@ -55,6 +54,4 @@ app.post('/stripe/create-checkout-session-hosted', async (req: Request, res: Res
 
 
   res.json({checkout_url: session.url});
-
-  // res.redirect(303, session.url);
-}); */
+});
