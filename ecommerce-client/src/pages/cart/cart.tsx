@@ -1,11 +1,14 @@
-import { FormEvent } from "react";
+import { FormEvent, useContext } from "react";
 import "./cartCss.css";
 import { CartCustomerDetails } from "./cartCustomerDetails";
 import { CartItems } from "./cartItems";
 import { CartDetailsData } from "../../models/cart";
 import { Customer } from "../../models/costumer";
+import { CartContext } from "../../context/cartContext";
 
 export const Cart = () => {
+    const cartContext = useContext(CartContext);
+    const { cart} = cartContext;
   
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -42,15 +45,22 @@ export const Cart = () => {
 
   return (
     <>
+        {cart.length < 1 ? (
+          <p>Empty cart</p>) : (
+      <>
       <div className="container">
+      <div>
         <CartItems CartData={CartData} />
       </div>
       <div>
         <CartCustomerDetails CustomerData={CustomerData}/>
       </div>
+      </div>
       <form onSubmit={handleSubmit}>
         <button>To checkout</button>
       </form>
+      </>
+    )}
     </>
   );
 };

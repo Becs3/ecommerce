@@ -34,10 +34,7 @@ export const CartItems = ({ CartData }: ICartData) => {
     <>
       <div>
         <h2>Your Cart</h2>
-        {cart.length < 1 ? (
-          <p>Cart is empty</p>
-        ) : (
-          cart.map((cartItem) => (
+        {cart.map((cartItem) => (
             <div key={cartItem.product.id} className="orderItem-container">
               <img src={cartItem.product.image} alt={cartItem.product.name} />
               <p>{cartItem.product.name}</p>
@@ -74,7 +71,7 @@ export const CartItems = ({ CartData }: ICartData) => {
               </button>
             </div>
           ))
-        )}
+        }
         <h3>Total Price: {totalPrice.toFixed(2)} SEK</h3>
       </div>
     </>
