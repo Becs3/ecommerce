@@ -114,10 +114,7 @@ export const Cart = () => {
 
     } catch (error) {
       console.log(error);
-    } finally {
-      /* localStorage.setItem("customer_id", JSON.stringify("")); */
-      /* localStorage.setItem("cart", JSON.stringify([]));  */
-    }
+    } 
   };
 
   return (

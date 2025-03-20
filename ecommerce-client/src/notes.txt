@@ -1,11 +1,4 @@
 
 Notes 
 
-adding changes to order:
-
-        payment status: 
-        payment id
-        order status
-
-
-orderUpdateCat
+välja mellan webhooks eller föra över session id
