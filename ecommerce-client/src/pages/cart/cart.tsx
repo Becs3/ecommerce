@@ -7,11 +7,12 @@ import { CartContext } from "../../context/cartContext";
 import { useOrder } from "../../hooks/useOrder";
 import { IOrder } from "../../models/order";
 import { IOrderItem } from "../../models/orderItem";
+import { updateOrder } from "../../service/orderService";
 
 export const Cart = () => {
     const cartContext = useContext(CartContext);
     const {cart} = cartContext;
-    const {createOrderHandler} = useOrder();
+    const {createOrderHandler, updateOrderHandler} = useOrder();
     const [custId, setCustId] = useState<number>(0)
 
     useEffect(() => {
@@ -80,7 +81,7 @@ export const Cart = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({newOrder})
+          body: JSON.stringify(newOrder)
         }
       );
 
@@ -89,6 +90,8 @@ export const Cart = () => {
 
       // Redirect to Stripe Hosted Checkout
       window.location.href = data.checkout_url;
+
+    /*   const updateOrder = await updateOrder */
 
 
     } catch (error) {

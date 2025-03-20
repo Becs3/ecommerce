@@ -34,12 +34,15 @@ app.listen(PORT, () => {
 const stripe = require('stripe')(process.env.SECRET_KEY);
 
 app.post('/stripe/create-checkout-session-hosted', async (req: Request, res: Response) => {
+  
   const order: IOrder = req.body;
-  const items = order?.order_items;
+  const items = order.order_items;
 
   const lineItems = items.map((item) => {
 
-    if(!item){console.log ("no item")}
+    if(!item){
+      console.log ("no item")
+    }
 
     return {
     price_data: {
