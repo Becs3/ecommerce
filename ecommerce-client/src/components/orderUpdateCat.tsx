@@ -9,7 +9,7 @@ type updateOrderStatusProps = {
 
 export const UpdateOrderStatus = ({OrderID}: updateOrderStatusProps) => {
 
-    const order_categories = ["inProgress", "readyForCollection", "cancelled", "Completed"]
+    const order_categories = ["pending", "readyForCollection", "cancelled", "Completed"]
     const payment_categories = ["not paid", "paid"]
 
       const [orderStatus, setOrderStatus] = useState(""); 

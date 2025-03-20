@@ -1,29 +1,13 @@
 import { useContext, useEffect } from "react";
 import { CartContext } from "../../context/cartContext";
-import { CartDetailsData } from "../../models/cart";
 
-type ICartData = {
-  CartData: (cartInfo: CartDetailsData[]) => void;
-};
-
-export const CartItems = ({ CartData }: ICartData) => {
+export const CartItems = () => {
   const cartContext = useContext(CartContext);
   const { cart, UpdateCart, DeleteFromCart } = cartContext;
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
-
-  const cartInformationData = cart.map((item) => ({
-    quantity: item.quantity,
-    id: item.product.id,
-  }));
-
-  useEffect(() => {
-    if (CartData) {
-      CartData(cartInformationData);
-    }
-  }, [CartData, cartInformationData]);
 
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.product.price * item.quantity,

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { IOrderItem, OrderItem, updateOrItem } from "../models/orderItem";
+import { IOrderItem, updateOrItem } from "../models/orderItem";
 import { createOrderItem, deleteOrderItem, updateOrderItem } from "../service/orderItemService";
 
 
@@ -8,7 +8,7 @@ export const useOrderItem = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
 
-const createOrderItemHandler = async(payload:OrderItem) => {
+const createOrderItemHandler = async(payload:IOrderItem) => {
         setIsLoading(true);
 
         try {

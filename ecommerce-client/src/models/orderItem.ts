@@ -12,7 +12,7 @@ export interface IOrderItem extends RowDataPacket {
 
 export type updateOrItem = Pick<IOrderItem, "quantity">
 
-export class OrderItem {
+/* export class OrderItem {
   public id: number = Math.random();
   public created_at: string = new Date().toISOString();
 
@@ -23,4 +23,4 @@ export class OrderItem {
   public quantity: number,
   public unit_price: number,
   ) {}
-}
+} */

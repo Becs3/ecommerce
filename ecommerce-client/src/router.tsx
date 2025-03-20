@@ -17,6 +17,7 @@ import { CreateCustomerPage } from "./pages/create/createCostumer";
 import { Cart } from "./pages/cart/cart";
 
 
+
 export const router = createBrowserRouter([
   {
     path: "/",

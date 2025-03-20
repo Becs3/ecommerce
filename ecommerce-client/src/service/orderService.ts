@@ -1,5 +1,5 @@
 import axios from "axios"
-import { IOrder, Order, updateOrd } from "../models/order"
+import { IOrder, updateOrd } from "../models/order"
 import { IOrderItem } from "../models/orderItem"
 import { API_URL, handleRequest } from "./baseService"
 
@@ -12,8 +12,8 @@ export const fetchOrderByID = async(id:number) => {
 }
 
 
-export const createOrder = async(payload: Order) => {
-    return await handleRequest<Order>(axios.post(`${API_URL}/orders`, payload))
+export const createOrder = async(payload: IOrder) => {
+    return await handleRequest<IOrder>(axios.post(`${API_URL}/orders`, payload))
 }
 
 export const updateOrder = async(id:number, payload: updateOrd): Promise<IOrderItem> => {

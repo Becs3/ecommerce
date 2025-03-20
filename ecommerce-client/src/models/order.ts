@@ -4,12 +4,12 @@ import { IOrderItem } from "./orderItem";
 export interface IOrder extends RowDataPacket {
   id: number
   customer_id: number
-  total_price: number
+/*   total_price: number */
   payment_status: string
   payment_id: string
   order_status: string
-  created_at: string
-  customer_firstname: string
+/*  created_at: string
+   customer_firstname: string
   customer_lastname: string
   customer_email: string
   customer_phone: string
@@ -17,21 +17,27 @@ export interface IOrder extends RowDataPacket {
   customer_postal_code: string
   customer_city: string
   customer_country: string
-  customers_created_at: string
+  customers_created_at: string */
   order_items: IOrderItem[]
 }
 
-export class Order {
-    public id: number = Math.random();
-    public created_at: string = new Date().toISOString();
+/* export class Order {
+     public id: number = Math.random();
+    public created_at: string = new Date().toISOString(); 
 
     constructor(
         public customer_id: number,
-        public total_price: number,
         public payment_status: string,
         public payment_id: string,
         public order_status: string,
-        public customer_firstname: string,
+        public order_items: IOrderItem[]
+    ) {}
+} */
+
+export type updateOrd = Pick<IOrder, "order_status" | "payment_status">
+
+/*      public total_price: number, */
+/*      public customer_firstname: string,
         public customer_lastname: string,
         public customer_email: string,
         public customer_phone: string,
@@ -39,9 +45,4 @@ export class Order {
         public customer_postal_code: string,
         public customer_city: string,
         public customer_country: string,
-        public customers_created_at: string,
-        public order_items: IOrderItem[]
-    ) {}
-}
-
-export type updateOrd = Pick<IOrder, "order_status" | "payment_status">
+        public customers_created_at: string, */

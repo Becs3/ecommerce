@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { IOrder, Order, updateOrd } from "../models/order";
+import { IOrder, updateOrd } from "../models/order";
 import { createOrder, deleteOrder, fetchOrders, fetchOrderByID, updateOrder } from "../service/orderService";
 
 
@@ -35,7 +35,7 @@ export const useOrder = () => {
         }
     }
 
-    const createOrderHandler = async(payload:Order) => {
+    const createOrderHandler = async(payload:IOrder) => {
         setIsLoading(true);
 
         try {
