@@ -27,6 +27,7 @@ export const OrderDetails = () => {
                 <h2>OrderDetails</h2>
                 <ul>
                     <li>Payment status: {order?.payment_status}</li>
+                    <li>Payment id: {order?.payment_id}</li>
                     <li>Order status: {order?.order_status}</li>
                     <li>Order price: {order?.total_price}</li>
                     <li>Order date: {order?.created_at}</li>

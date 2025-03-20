@@ -15,6 +15,7 @@ export const UpdateOrderStatus = ({OrderID}: updateOrderStatusProps) => {
       const [orderStatus, setOrderStatus] = useState(""); 
       const [paymentStatus, setPaymentStatus] = useState(""); 
       const {fetchOrderByIdHandler, updateOrderHandler}=useOrder();
+      const paymentId = ("");
 
       useEffect(() => {
         const fetchOrderStatus = async () => {
@@ -31,7 +32,7 @@ export const UpdateOrderStatus = ({OrderID}: updateOrderStatusProps) => {
 
       const handleSubmit = () => {
 
-        updateOrderHandler(OrderID, { order_status: orderStatus, payment_status: paymentStatus })
+        updateOrderHandler(OrderID, { order_status: orderStatus, payment_id:paymentId, payment_status: paymentStatus })
 
       }
 

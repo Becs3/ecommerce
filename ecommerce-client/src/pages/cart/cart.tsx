@@ -7,13 +7,13 @@ import { CartContext } from "../../context/cartContext";
 import { useOrder } from "../../hooks/useOrder";
 import { IOrder } from "../../models/order";
 import { IOrderItem } from "../../models/orderItem";
-import { updateOrder } from "../../service/orderService";
 
 export const Cart = () => {
     const cartContext = useContext(CartContext);
     const {cart} = cartContext;
     const {createOrderHandler, updateOrderHandler} = useOrder();
     const [custId, setCustId] = useState<number>(0)
+    const [sessionId, setSessionId] = useState("");
 
     useEffect(() => {
       const storedID = localStorage.getItem("customer_id"); 
@@ -40,7 +40,7 @@ export const Cart = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(custId)
+    console.log("customer id", custId)
 
     if (!custId) {
       console.error("Customer ID is missing.");
@@ -67,12 +67,12 @@ export const Cart = () => {
 
     try {
 
-      console.log(newOrder)
-      console.log(cartItems)
+      console.log("new order:", newOrder)
+      console.log("products:", cartItems)
 
       const createdOrder = await createOrderHandler(newOrder);
-      const orderId = createdOrder;
-      console.log(orderId)
+      const orderId = createdOrder.id;
+      console.log("order id:", orderId)
 
       const response = await fetch(
         "http://localhost:3000/stripe/create-checkout-session-hosted",
@@ -86,19 +86,37 @@ export const Cart = () => {
       );
 
       const data = await response.json();
-      // console.log(data.checkout_url);
+
+      const url = data.checkout_url;
+      const match = url.match(/cs_test_[^#]+/);
+      if(match) {
+        const session_id = match[0]
+        setSessionId(session_id)
+        const update = await updateOrderHandler(orderId, {
+          order_status: "unpaid", 
+          payment_id: session_id, 
+          payment_status: "pending"})
+
+          if(update){
+            console.log("payment id update:", session_id)
+            console.log("order updated")
+          } else {
+            console.log("failed to update")
+          }
+        
+      } else {
+        console.log("id not found")
+      }
+
 
       // Redirect to Stripe Hosted Checkout
-      window.location.href = data.checkout_url;
-
-    /*   const updateOrder = await updateOrder */
-
+      window.location.href = data.checkout_url; 
 
     } catch (error) {
       console.log(error);
     } finally {
       /* localStorage.setItem("customer_id", JSON.stringify("")); */
-      localStorage.setItem("cart", JSON.stringify([])); 
+      /* localStorage.setItem("cart", JSON.stringify([]));  */
     }
   };
 

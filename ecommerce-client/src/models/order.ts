@@ -21,28 +21,6 @@ export interface IOrder extends RowDataPacket {
   order_items: IOrderItem[]
 }
 
-/* export class Order {
-     public id: number = Math.random();
-    public created_at: string = new Date().toISOString(); 
 
-    constructor(
-        public customer_id: number,
-        public payment_status: string,
-        public payment_id: string,
-        public order_status: string,
-        public order_items: IOrderItem[]
-    ) {}
-} */
+export type updateOrd = Pick<IOrder, "order_status" | "payment_id" | "payment_status">
 
-export type updateOrd = Pick<IOrder, "order_status" | "payment_status">
-
-/*      public total_price: number, */
-/*      public customer_firstname: string,
-        public customer_lastname: string,
-        public customer_email: string,
-        public customer_phone: string,
-        public customer_street_address: string,
-        public customer_postal_code: string,
-        public customer_city: string,
-        public customer_country: string,
-        public customers_created_at: string, */

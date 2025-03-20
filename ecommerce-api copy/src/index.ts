@@ -66,18 +66,3 @@ const session = await stripe.checkout.sessions.create({
   res.json({checkout_url: session.url});
 });
 
-
-
-/* app.get('/order-confirmation?session_id={CHECKOUT_SESSION_ID}', async (req: Request, res: Response) => {
-
-  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
-  const customer = await stripe.customers.retrieve(session.customer);
-
-  res.json({
-    message: "order confirmed!",
-    customer_name: customer?.name,
-    payement_status: session.payement_status,
-    session_id: session.id
-  })
-
-}); */

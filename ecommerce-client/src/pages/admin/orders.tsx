@@ -3,7 +3,6 @@ import "../adminList.css"
 import { useEffect } from "react";
 import { useOrder } from "../../hooks/useOrder";
 import { AdminHeader } from "../../components/admin-header";
-import { UpdateOrderStatus } from "../../components/orderUpdateCat";
 
 export const Orders = () => {
 
@@ -40,7 +39,9 @@ export const Orders = () => {
                     <p>Customer email: {o.customer_email}</p>
                     <p>Customer phone: {o.customer_phone}</p>
                     <p>Price: {o.total_price}</p>
-                    <UpdateOrderStatus OrderID={o.id}/>
+                    <p>Orde status: {o.order_status}</p>
+                    <p>Payment status: {o.payment_status}</p>
+                    {/* <UpdateOrderStatus OrderID={o.id}/> */}
                     <p>Date: {o.created_at}</p>
                     <ul>
                     <li><a onClick={() => {deleteFullOrder(o.id)}}>Delete order </a></li>
