@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react"
 import { useCustomer } from "../../hooks/useCustomer"
 import { NewCartCustomer } from "./createNewCustomerCart";
-import { Customer, ICustomer } from "../../models/costumer";
+import { Customer} from "../../models/costumer";
 
 type ICustomerData = {
   CustomerData: (customer: Customer | null) => void;

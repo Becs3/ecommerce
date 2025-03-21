@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router";
 import { IOrder } from "../../models/order";
 import { useCustomer } from "../../hooks/useCustomer";
 import { ICustomer } from "../../models/costumer";
+import { useProducts } from "../../hooks/useProduct";
 
 export const OrderConfirmatin = () => {
   const {fetchOrderByPaymentIdHandler, updateOrderHandler} = useOrder();
@@ -12,7 +13,10 @@ export const OrderConfirmatin = () => {
   const session_id = searchParams.get("session_id")
   const [order, setOrder] = useState<IOrder|null>(null);
   const [customer, setCustomer] = useState<ICustomer|null>(null);
+  const {fetchProductByIdHandler} =useProducts();
+  const {updateProductHandler} = useProducts();
 
+  //get order
    useEffect(() => {
     if(!session_id) {
       console.log("found no session_id")
@@ -31,6 +35,7 @@ export const OrderConfirmatin = () => {
     fetchOrder();
   }, []) 
 
+  //update orderstatus
   useEffect(()=> {
     const updateOrder = async () => {
       if(!order) return; 
@@ -51,11 +56,10 @@ export const OrderConfirmatin = () => {
       }
     }
 
-
     updateOrder();
   }, [order])
 
-
+  //get Customer 
   useEffect(() => {
     const fetchCustomer = async (id: number) => {
       try {
@@ -71,9 +75,52 @@ export const OrderConfirmatin = () => {
     }
   }, [order]);
 
-  console.log(session_id)
-  console.log(order)
-  console.log(customer)
+  //Update Product stock
+  const FetchProductId = async(id:number) => {
+    try{
+    const Product = await fetchProductByIdHandler(id)
+    console.log("fetched product", Product)
+    } catch (error) {
+      console.log("problem fetching product", error)
+    }
+  }
+
+  useEffect(() => {
+    const updateOrderItems = async () => {
+      if (!order) return;
+      console.log("in updateOrder");
+  
+      await Promise.all(
+        order.order_items.map(async (item) => {
+          const fetchedProduct = await fetchProductByIdHandler(item.product_id);
+          console.log("fetched product", fetchedProduct);
+  
+          if (fetchedProduct) {
+            const updatedStock = fetchedProduct.stock - item.quantity;
+  
+            try {
+               await updateProductHandler(fetchedProduct.id, {
+                name: fetchedProduct.name,
+                description: fetchedProduct.description,
+                price: fetchedProduct.price,
+                category: fetchedProduct.category,
+                stock: updatedStock,
+              });
+              console.log("Updated product before stock:", fetchedProduct.stock, "new stock", updatedStock);
+            } catch (error) {
+              console.error("Error updating product:", error);
+            }
+          }
+        })
+      );
+    };
+  
+    updateOrderItems(); 
+  
+  }, [order]);
+
+  console.log("order", order)
+  console.log("customer", customer) 
 
   localStorage.setItem("customer_id", JSON.stringify(""));
   localStorage.setItem("cart", JSON.stringify([]));
@@ -92,6 +139,9 @@ export const OrderConfirmatin = () => {
                 <p>Price: {item.unit_price}</p>
           </div>
           ))}
+          </div>
+          <div>
+            <p>Total price: {order?.total_price} </p>
           </div>
           <div>
             <p>It will be delivered to: </p>
