@@ -86,11 +86,10 @@ export const Cart = () => {
       );
 
       const data = await response.json();
+      console.log(data.session_id)
 
-      const url = data.checkout_url;
-      const match = url.match(/cs_test_[^#]+/);
-      if(match) {
-        const session_id = match[0]
+      const session_id = data.session_id
+      if(session_id) {
         setSessionId(session_id)
         const update = await updateOrderHandler(orderId, {
           order_status: "unpaid", 
@@ -110,7 +109,7 @@ export const Cart = () => {
 
 
       // Redirect to Stripe Hosted Checkout
-      window.location.href = data.checkout_url; 
+       window.location.href = data.checkout_url;  
 
     } catch (error) {
       console.log(error);

@@ -15,6 +15,7 @@ import { CustomerPage } from "./pages/admin/customerPage";
 import { UpdateCustomerPage } from "./pages/update/updateCostumer";
 import { CreateCustomerPage } from "./pages/create/createCostumer";
 import { Cart } from "./pages/cart/cart";
+import { OrderConfirmatin } from "./pages/cart/orderConfirmation";
 
 
 
@@ -42,6 +43,12 @@ export const router = createBrowserRouter([
         path: "/cart",
         element: (
           <Cart />
+        ),
+      },
+      {
+        path: "/order-confirmation",
+        element: (
+          <OrderConfirmatin />
         ),
       },
       {

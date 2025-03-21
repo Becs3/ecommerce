@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { IOrder, updateOrd } from "../models/order";
-import { createOrder, deleteOrder, fetchOrders, fetchOrderByID, updateOrder } from "../service/orderService";
+import { createOrder, deleteOrder, fetchOrders, fetchOrderByID, updateOrder, fetchOrderByPaymentID } from "../service/orderService";
 
 
 export const useOrder = () => {
@@ -34,6 +34,21 @@ export const useOrder = () => {
             setIsLoading(false);
         }
     }
+
+    const fetchOrderByPaymentIdHandler = async(paymentId:string) => {
+        setIsLoading(true);
+
+        try {
+            return await fetchOrderByPaymentID(paymentId);
+        } catch(error){
+            setError("Problem fetching order")
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    
 
     const createOrderHandler = async(payload:IOrder) => {
         setIsLoading(true);
@@ -82,6 +97,7 @@ export const useOrder = () => {
         error, 
         fetchOrdersHandler, 
         fetchOrderByIdHandler,
+        fetchOrderByPaymentIdHandler,
         createOrderHandler,
         updateOrderHandler,
         deleteOrderHandler
