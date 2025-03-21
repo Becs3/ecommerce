@@ -32,7 +32,7 @@ export const ShowCustomers = () => {
         <Link to="createCustomer">Add new customer</Link>
     </div>
     <div>
-        <section className="order-container">
+        <section >
             {customers.map((c) => (
                 <div key={c.id} className="list-section">
                     <p>Customer name: {c.firstname} {c.lastname} </p>

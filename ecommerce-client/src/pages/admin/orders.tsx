@@ -31,7 +31,7 @@ export const Orders = () => {
     <div className="list-container">
         <h2>Orders</h2>
         <div>
-        <section className="order-container">
+        <section>
             {orders.map((o) => (
                 <div key={o.id} className="list-section">
                     <p>Order ID: {o.id}</p>
