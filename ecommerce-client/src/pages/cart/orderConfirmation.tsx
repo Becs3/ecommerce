@@ -5,6 +5,7 @@ import { IOrder } from "../../models/order";
 import { useCustomer } from "../../hooks/useCustomer";
 import { ICustomer } from "../../models/costumer";
 import { useProducts } from "../../hooks/useProduct";
+import "./confirmation.css"
 
 export const OrderConfirmatin = () => {
   const {fetchOrderByPaymentIdHandler, updateOrderHandler} = useOrder();
@@ -127,25 +128,28 @@ export const OrderConfirmatin = () => {
 
     return(
         <>
-        <div>
+        <div className="container">
           <h2>orderconfirmation</h2>
-          <p>Thank you {customer?.firstname }for your order, your order ID: {order?.id}</p>
+          <p>Thank you {customer?.firstname} for your order! </p>
+          <p>Your order ID: {order?.id}</p>
           <div>
           <p>You have ordered: </p>
             {order?.order_items.map((item) => (
               <div key={item.product_id}>
-                <p>{item.product_name}</p>
-                <p>Quantity: {item.quantity}</p>
-                <p>Price: {item.unit_price}</p>
+                <ul>
+                <li>
+                  <p>{item.product_name}</p>
+                  <p>Quantity: {item.quantity}</p>
+                  <p>Price: {item.unit_price}</p>
+                </li>
+                </ul>
           </div>
           ))}
-          </div>
-          <div>
             <p>Total price: {order?.total_price} </p>
           </div>
           <div>
             <p>It will be delivered to: </p>
-            <p>{customer?.firstname }{customer?.lastname}</p>
+            <p>{customer?.firstname} {customer?.lastname}</p>
             <p>{customer?.street_address}</p>
             <p>{customer?.postal_code}</p>
             <p>{customer?.city}</p>
