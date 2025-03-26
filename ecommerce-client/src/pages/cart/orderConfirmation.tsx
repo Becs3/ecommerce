@@ -124,12 +124,13 @@ export const OrderConfirmatin = () => {
   console.log("customer", customer) 
 
   localStorage.setItem("customer_id", JSON.stringify(""));
+  localStorage.removeItem("cart");
   localStorage.setItem("cart", JSON.stringify([]));
 
     return(
         <>
         <div className="container">
-          <h2>orderconfirmation</h2>
+          <h2>Order confirmation</h2>
           <p>Thank you {customer?.firstname} for your order! </p>
           <p>Your order ID: {order?.id}</p>
           <div>

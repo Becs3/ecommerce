@@ -15,13 +15,42 @@ export const Cart = () => {
     const [custId, setCustId] = useState<number>(0)
     const [sessionId, setSessionId] = useState("");
 
-    useEffect(() => {
+/*     useEffect(() => {
       const storedID = localStorage.getItem("customer_id"); 
       if(storedID){
         const customerID =Number( JSON.parse(storedID));
         setCustId(customerID)
       }
+    }, [custId]); */
+
+    useEffect(() => {
+      const storedID = localStorage.getItem("customer_id");
+  
+      if (storedID) {
+        const customerID = Number(JSON.parse(storedID));
+        if (!isNaN(customerID) && customerID > 0) {
+          setCustId(customerID);
+        } else {
+          console.warn("Invalid Customer ID found in localStorage.");
+        }
+      } else {
+        console.warn("No Customer ID found in localStorage.");
+      }
+    }, []);
+  
+    useEffect(() => {
+      if (custId > 0) {
+        console.log("Saving Customer ID:", custId);
+        localStorage.setItem("customer_id", JSON.stringify(custId));
+      }
     }, [custId]);
+  
+    const CustomerData = (customer: Customer | null) => {
+      if (customer && customer.id > 0) {
+        setCustId(customer.id); 
+        console.log("Customer ID saved:", customer.id);
+      }
+    };
 
   const cartItems = cart.map((item) => ({
     product_id: item.product.id,
@@ -29,14 +58,6 @@ export const Cart = () => {
     quantity: item.quantity,
     unit_price: item.product.price,
   }));
-
-
-  const CustomerData = (customer: Customer | null) => {
-    if (customer) {
-      localStorage.setItem("customer_id", JSON.stringify(customer.id));
-      console.log("Customer id saved:", customer.id);
-    }
-  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
