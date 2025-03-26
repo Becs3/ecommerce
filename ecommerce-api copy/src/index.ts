@@ -59,8 +59,8 @@ app.post('/stripe/create-checkout-session-hosted', async (req: Request, res: Res
 const session = await stripe.checkout.sessions.create({
   line_items: lineItems,
   mode: 'payment',
-    success_url: `http://localhost:5179/order-confirmation?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: 'http://localhost:5179/cart',
+    success_url: `http://localhost:5173/order-confirmation?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: 'http://localhost:5173/cart',
   });
 
   res.json({
